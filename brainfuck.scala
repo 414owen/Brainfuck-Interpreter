@@ -74,24 +74,25 @@ object Brainfuck {
                                  " | " + program(instruction) + "\n"
     }
 
-    @throws(classOf[Exception])
     def main(args: Array[String]) {
                 
         def nextState(mach: Machine): Option[Machine] = {
-            //println(mach.toString)
             mach.program(mach.instruction) match {
-                case '<' => Some(mach.memLeft.codeRight)
-                case '>' => Some(mach.memRight.codeRight)
                 case '[' => if (mach.current == 0) 
                                 Some(mach.matchBracket(']', '[', i => i + 1).codeRight)
                             else Some(mach.codeRight)
                 case ']' => Some(mach.matchBracket('[', ']', i => i - 1))
-                case '+' => Some(mach.editMem(i => (i + 1).toByte).codeRight)
-                case '-' => Some(mach.editMem(i => (i - 1).toByte).codeRight)
-                case '.' => Some(mach.printChar.codeRight)
-                case ',' => Some(mach.strChar.codeRight)
-                case '\u0000' => None
-                case _ => Some(mach.codeRight)
+                case _ => if (mach.instruction != mach.program.length - 1)
+                              mach.program(mach.instruction) match {
+                                  case '<' => Some(mach.memLeft.codeRight)
+                                  case '>' => Some(mach.memRight.codeRight)
+                                  case '+' => Some(mach.editMem(i => (i + 1).toByte).codeRight)
+                                  case '-' => Some(mach.editMem(i => (i - 1).toByte).codeRight)
+                                  case '.' => Some(mach.printChar.codeRight)
+                                  case ',' => Some(mach.strChar.codeRight)
+                                  case _ => Some(mach.codeRight)
+                              }
+                          else None
             }
         }
 

@@ -5,4 +5,4 @@
 	scala Brainfuck ../hello.bf		# Or other brainfuck program
 
 ### TODO
-* Fix crashing after terminating program
+* ~~Fix crashing after terminating program~~
