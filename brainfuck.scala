@@ -74,7 +74,7 @@ object Brainfuck {
                                  " | " + program(instruction) + "\n"
     }
 
-
+    @throws(classOf[Exception])
     def main(args: Array[String]) {
                 
         def nextState(mach: Machine): Option[Machine] = {
