@@ -2,8 +2,7 @@ import scala.annotation.tailrec
 
 object Brainfuck {
     class Machine (ml: List[Byte], mr: List[Byte],
-                   mc: Byte, prog: String,
-                   at:Int) {
+                   mc: Byte, prog: String, at:Int) {
         val left = ml
         val right = mr
         val current = mc
@@ -21,7 +20,7 @@ object Brainfuck {
             }
             new Machine(newLeft, current::right, 
                 curr, program, instruction)
-            }
+        }
 
         def memRight(): Machine = {
             val curr: Byte = right match {
@@ -94,7 +93,8 @@ object Brainfuck {
             }
         }
 
-        val program = scala.io.Source.fromFile(args(0)).mkString
+        val program = scala.io.Source.fromFile(args(0))
+            .mkString.filter(a => "[]<>+-.,".contains(a))
         mutateToEnd(new Machine(List(0), List(0), 0.toByte, program, 0))
     }
 }
