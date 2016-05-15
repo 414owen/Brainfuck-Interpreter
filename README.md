@@ -6,3 +6,4 @@
 
 ### TODO
 * ~~Fix crashing after terminating program~~
+* Fix Stack Overflow when matching brackets are super far apart.

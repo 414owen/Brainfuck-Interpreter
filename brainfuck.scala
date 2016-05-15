@@ -42,8 +42,8 @@ object Brainfuck {
         def editMem(f: Byte => Byte): Machine = new Machine(left, 
             right, f(current), program, instruction)
 
-        def matchBracket(find: Char, counter: Char, dir: Int => Int, depth: Int = 0): Machine = {
-            @tailrec
+        @tailrec
+        final def matchBracket(find: Char, counter: Char, dir: Int => Int, depth: Int = 0): Machine = {
             val machNext = new Machine(left, right, 
                 current, program, dir(instruction))
             val machNextChar = machNext.program(machNext.instruction)
@@ -87,6 +87,7 @@ object Brainfuck {
             }
         }
 
+            @tailrec
         def mutateToEnd(mach: Machine): Option[Machine] = {
             nextState(mach) match {
                 case None => None
