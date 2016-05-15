@@ -1,5 +1,3 @@
-import scala.annotation.tailrec
-
 object Brainfuck {
     class Machine (ml: List[Byte], mr: List[Byte],
                    mc: Byte, prog: String, at:Int) {
@@ -41,16 +39,16 @@ object Brainfuck {
         def editMem(f: Byte => Byte): Machine = new Machine(left, 
             right, f(current), program, instruction)
 
-        @tailrec
-        final def matchBracket(find: Char, counter: Char, dir: Int => Int, depth: Int = 0): Machine = {
+        final def matchBracket(brac: Char, depth: Int = 0): Machine = {
+            val otherBrac = if (brac == '[') ']' else '['
+            val inc = if (brac == '[') 1 else -1
             val machNext = new Machine(left, right, 
-                current, program, dir(instruction))
-            val machNextChar = machNext.program(machNext.instruction)
-            machNextChar match {
-                case `find` => if (depth == 0) machNext
-                             else machNext.matchBracket(find, counter, dir, depth - 1)
-                case `counter` => machNext.matchBracket(find, counter, dir, depth + 1)
-                case _ => machNext.matchBracket(find, counter, dir, depth)
+                current, program, instruction + inc)
+            machNext.program(machNext.instruction) match {
+                case `brac` => machNext.matchBracket(brac, depth - inc)
+                case `otherBrac` => if (depth + inc == inc) machNext
+                    else machNext.matchBracket(brac, depth + inc)
+                case _ => machNext.matchBracket(brac, depth)
             }
         }
 
@@ -62,14 +60,14 @@ object Brainfuck {
         def strChar(): Machine = {
             editMem(i => Console.in.read.toChar.toByte)
         }
-        
+
         def nextState(): Option[Machine] = {
             val machNext: Machine = program(instruction) match {
                 case '[' => if (current == 0) 
-                              matchBracket(']', '[', i => i + 1).codeRight
+                                matchBracket('[').codeRight
                             else codeRight
                 case ']' => if (current == 0) codeRight
-                            else matchBracket('[', ']', i => i - 1)
+                            else matchBracket(']').codeRight
                 case '<' => memLeft.codeRight
                 case '>' => memRight.codeRight
                 case '+' => editMem(i => (i + 1).toByte).codeRight
@@ -78,7 +76,9 @@ object Brainfuck {
                 case ',' => strChar.codeRight
                 case _ => codeRight
             }
-            if (instruction != program.length - 1) Some(machNext)
+            if (machNext.instruction <= program.length - 1 
+                && machNext.instruction >= 0) 
+                    Some(machNext)
             else None
         }
     }
@@ -93,7 +93,6 @@ object Brainfuck {
 
         val program = scala.io.Source.fromFile(args(0))
             .mkString.filter(a => "[]<>+-.,".contains(a))
-        mutateToEnd(new Machine(List(0), List(0), 0.toByte, program, 0))
-        System.exit(0)
+        mutateToEnd(new Machine(List(), List(), 0.toByte, program, 0))
     }
 }
