@@ -62,31 +62,30 @@ object Brainfuck {
         def strChar(): Machine = {
             editMem(i => Console.in.read.toChar.toByte)
         }
+        
+        def nextState(): Option[Machine] = {
+            val machNext: Machine = program(instruction) match {
+                case '[' => if (current == 0) 
+                              matchBracket(']', '[', i => i + 1).codeRight
+                            else codeRight
+                case ']' => if (current == 0) codeRight
+                            else matchBracket('[', ']', i => i - 1)
+                case '<' => memLeft.codeRight
+                case '>' => memRight.codeRight
+                case '+' => editMem(i => (i + 1).toByte).codeRight
+                case '-' => editMem(i => (i - 1).toByte).codeRight
+                case '.' => printChar.codeRight
+                case ',' => strChar.codeRight
+                case _ => codeRight
+            }
+            if (instruction != program.length - 1) Some(machNext)
+            else None
+        }
     }
 
     def main(args: Array[String]) {
-        def nextState(mach: Machine): Option[Machine] = {
-            mach.program(mach.instruction) match {
-                case '[' => if (mach.current == 0) 
-                                Some(mach.matchBracket(']', '[', i => i + 1).codeRight)
-                            else Some(mach.codeRight)
-                case ']' => Some(mach.matchBracket('[', ']', i => i - 1))
-                case _ => if (mach.instruction != mach.program.length - 1)
-                              mach.program(mach.instruction) match {
-                                  case '<' => Some(mach.memLeft.codeRight)
-                                  case '>' => Some(mach.memRight.codeRight)
-                                  case '+' => Some(mach.editMem(i => (i + 1).toByte).codeRight)
-                                  case '-' => Some(mach.editMem(i => (i - 1).toByte).codeRight)
-                                  case '.' => Some(mach.printChar.codeRight)
-                                  case ',' => Some(mach.strChar.codeRight)
-                                  case _ => Some(mach.codeRight)
-                              }
-                          else None
-            }
-        }
-
         def mutateToEnd(mach: Machine): Option[Machine] = {
-            nextState(mach) match {
+            mach.nextState match {
                 case None => None
                 case Some(m) => mutateToEnd(m)
             }
