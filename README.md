@@ -1,5 +1,6 @@
 ## Brainfuck Interpreter
 ### How to test:
+    mkdir bytecode
 	scalac -d bytecode brainfuck.scala
 	cd bytecode
 	scala Brainfuck ../examples/hanoi.bf		# Or the path of another brainfuck program
