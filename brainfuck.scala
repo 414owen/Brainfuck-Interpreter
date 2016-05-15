@@ -24,7 +24,6 @@ object Brainfuck {
             }
 
         def memRight(): Machine = {
-            //println("WOAH!")
             val curr: Byte = right match {
                 case x :: rest => x
                 case nil => 0
@@ -43,8 +42,7 @@ object Brainfuck {
         def editMem(f: Byte => Byte): Machine = new Machine(left, 
             right, f(current), program, instruction)
 
-        def matchBracket(find: Char, counter: Char, dir: Int => Int, depth: Int
-        = 0): Machine = {
+        def matchBracket(find: Char, counter: Char, dir: Int => Int, depth: Int = 0): Machine = {
             @tailrec
             val machNext = new Machine(left, right, 
                 current, program, dir(instruction))
@@ -66,16 +64,9 @@ object Brainfuck {
             val c = Console.in.read.toChar.toByte
             editMem(i => c)
         }
-
-        override def toString(): String = "left: " + left +
-                                 "\nright: " + right +
-                                 "\ncurrent: " + current.toString +
-                                 "\ninstruction: " + instruction +
-                                 " | " + program(instruction) + "\n"
     }
 
     def main(args: Array[String]) {
-                
         def nextState(mach: Machine): Option[Machine] = {
             mach.program(mach.instruction) match {
                 case '[' => if (mach.current == 0) 
@@ -104,7 +95,6 @@ object Brainfuck {
         }
 
         val program = scala.io.Source.fromFile(args(0)).mkString
-        println("Program:\n" + program)
         mutateToEnd(new Machine(List(0), List(0), 0.toByte, program, 0))
     }
 }
