@@ -5,7 +5,7 @@ The only limitation on the amount of available cells is your RAM.
 
 Cells are 1 Byte in size.
 
-Internally, everything is immutable and each machine state is shared with the previous/next.
+Internally, everything is immutable and each machine state is shared with the previous/next state.
 
 
 ### How to test:
