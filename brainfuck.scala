@@ -47,7 +47,7 @@ object Brainfuck {
             machNext.program(machNext.instruction) match {
                 case `brac` => machNext.matchBracket(brac, depth - inc)
                 case `otherBrac` => if (depth + inc == inc) machNext
-                    else machNext.matchBracket(brac, depth + inc)
+                        else machNext.matchBracket(brac, depth + inc)
                 case _ => machNext.matchBracket(brac, depth)
             }
         }
