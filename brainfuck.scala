@@ -87,7 +87,6 @@ object Brainfuck {
             }
         }
 
-            @tailrec
         def mutateToEnd(mach: Machine): Option[Machine] = {
             nextState(mach) match {
                 case None => None
