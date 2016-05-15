@@ -17,3 +17,4 @@ Internally, everything is immutable and each machine state is shared with the pr
 ### TODO
 * ~~Fix crashing after terminating program~~
 * ~~Fix Stack Overflow when matching brackets are super far apart.~~
+* Fix input requiring a newline character to register.

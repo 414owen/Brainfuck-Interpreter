@@ -60,8 +60,7 @@ object Brainfuck {
         }
 
         def strChar(): Machine = {
-            val c = Console.in.read.toChar.toByte
-            editMem(i => c)
+            editMem(i => Console.in.read.toChar.toByte)
         }
     }
 
@@ -96,5 +95,6 @@ object Brainfuck {
         val program = scala.io.Source.fromFile(args(0))
             .mkString.filter(a => "[]<>+-.,".contains(a))
         mutateToEnd(new Machine(List(0), List(0), 0.toByte, program, 0))
+        System.exit(0)
     }
 }
