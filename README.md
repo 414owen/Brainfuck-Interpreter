@@ -8,7 +8,8 @@ the previous/next state
 ### How to use:
     mkdir bytecode
     scalac -d bytecode brainfuck.scala 
-    cd bytecode scala Brainfuck ../examples/hanoi.bf		# Or the path of another brainfuck program
+    cd bytecode
+    scala Brainfuck ../examples/hanoi.bf		# Or the path of another brainfuck program
 
 ### TODO
 * ~~Fix crashing after terminating program~~  
