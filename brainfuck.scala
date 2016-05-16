@@ -29,8 +29,7 @@ object Brainfuck {
                 newCurrent, program, instruction)
         }
 
-        def codeRight(): Machine = Machine(left, 
-                right, current, program, instruction + 1)
+        def codeRight(): Machine = copy(instruction = instruction + 1)
 
         def editMem(f: Byte => Byte): Machine = Machine(left, 
             right, f(current), program, instruction)
@@ -82,11 +81,10 @@ object Brainfuck {
     }
 
     def main(args: Array[String]) {
-        def mutateToEnd(mach: Machine): Option[Machine] = {
+        def mutateToEnd(mach: Machine): Option[Machine] = 
             mach.nextState match {
-                case None => None
                 case Some(m) => mutateToEnd(m)
-            }
+                case None => None
         }
 
         val program = scala.io.Source.fromFile(args(0))
