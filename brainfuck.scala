@@ -8,7 +8,7 @@ object Brainfuck {
         val instruction = at
 
         def memLeft(): Machine = {
-            val curr: Byte = left match {
+            val newCurrent: Byte = left match {
                 case x :: rest => x
                 case nil => 0
             }
@@ -17,11 +17,11 @@ object Brainfuck {
                 case nil => List(0)
             }
             new Machine(newLeft, current::right, 
-                curr, program, instruction)
+                newCurrent, program, instruction)
         }
 
         def memRight(): Machine = {
-            val curr: Byte = right match {
+            val newCurrent: Byte = right match {
                 case x :: rest => x
                 case nil => 0
             }
@@ -30,7 +30,7 @@ object Brainfuck {
                 case nil => List(0)
             }
             new Machine(current::left, newRight,
-                curr, program, instruction)
+                newCurrent, program, instruction)
         }
 
         def codeRight(): Machine = new Machine(left, 
