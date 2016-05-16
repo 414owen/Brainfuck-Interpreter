@@ -15,8 +15,7 @@ the previous/next state
 * ~~Fix Stack Overflow when matching brackets are super far apart.~~
 
 ### Unresolvable?
-* Fix input requiring a newline character to register.
-
+* Fix input requiring a newline character to register.  
 (This is difficult, as reading input one character at a time requires switching  
 the console to 'raw'mode, as opposed to 'cooked' (line-by line) mode. There is  
 no cross-platform way of doing this, hence it is not supported by Java or Scala,  
