@@ -12,7 +12,7 @@ object Brainfuck {
                 case x :: rest => rest
                 case nil => List(0)
             }
-            new Machine(newLeft, current::right, 
+            Machine(newLeft, current::right, 
                 newCurrent, program, instruction)
         }
 
@@ -25,20 +25,20 @@ object Brainfuck {
                 case x :: rest => rest
                 case nil => List(0)
             }
-            new Machine(current::left, newRight,
+            Machine(current::left, newRight,
                 newCurrent, program, instruction)
         }
 
-        def codeRight(): Machine = new Machine(left, 
+        def codeRight(): Machine = Machine(left, 
                 right, current, program, instruction + 1)
 
-        def editMem(f: Byte => Byte): Machine = new Machine(left, 
+        def editMem(f: Byte => Byte): Machine = Machine(left, 
             right, f(current), program, instruction)
 
         final def matchBracket(brac: Char, depth: Int = 0): Machine = {
             val otherBrac = if (brac == '[') ']' else '['
             val inc = if (brac == '[') 1 else -1
-            val machNext = new Machine(
+            val machNext = Machine(
                 left, right,
                 current, program,
                 instruction + inc)
@@ -91,6 +91,6 @@ object Brainfuck {
 
         val program = scala.io.Source.fromFile(args(0))
             .mkString.filter("[]<>+-.,".contains(_))
-        mutateToEnd(new Machine(List(), List(), 0.toByte, program, 0))
+        mutateToEnd(Machine(List(), List(), 0.toByte, program, 0))
     }
 }
