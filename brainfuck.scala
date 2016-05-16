@@ -76,7 +76,7 @@ object Brainfuck {
                 case ',' => strChar
                 case _ => this
             }
-            if (machNext.instruction <= program.length - 2 
+            if (machNext.instruction < program.length - 1 
                 && machNext.instruction >= 0) 
                     Some(machNext.codeRight)
             else None
