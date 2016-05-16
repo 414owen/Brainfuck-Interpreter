@@ -17,20 +17,20 @@ object Brainfuck {
 
   def main(args: Array[String]) =
     run(scala.io.Source.fromFile(args(0))
-      .mkString.filter("[]<>+-.,".contains(_)))
+        .mkString.filter("[]<>+-.,".contains(_)))
 
   def run(program: String): Unit = 
     mutateToEnd(Machine(List(), List(), 0.toByte, program, 0))
 
   case class Machine (left: List[Byte], right: List[Byte],
-           current: Byte, program: String, 
-           instruction: Int) {
+                      current: Byte, program: String,
+                      instruction: Int) {
 
     def memLeft(): Machine = copy(left = tailOrSame(left), 
-      right = current::right, current = headOrZero(left))
+        right = current::right, current = headOrZero(left))
 
     def memRight(): Machine = copy(left = current::left, 
-      right =tailOrSame(right), current = headOrZero(right))
+        right =tailOrSame(right), current = headOrZero(right))
 
     def codeRight(): Machine = copy(instruction = instruction + 1)
 
@@ -70,8 +70,8 @@ object Brainfuck {
         case ',' => strChar
       }
       if (machNext.instruction < program.length - 1 
-        && machNext.instruction >= 0) 
-          Some(machNext.codeRight)
+          && machNext.instruction >= 0) 
+        Some(machNext.codeRight)
       else None
     }
   }
