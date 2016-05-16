@@ -31,7 +31,7 @@ object Brainfuck {
             }
             new Machine(current::left, newRight,
                 curr, program, instruction)
-            }
+        }
 
         def codeRight(): Machine = new Machine(left, 
                 right, current, program, instruction + 1)
