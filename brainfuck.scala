@@ -64,21 +64,21 @@ object Brainfuck {
         def nextState(): Option[Machine] = {
             val machNext: Machine = program(instruction) match {
                 case '[' => if (current == 0) 
-                                matchBracket('[').codeRight
-                            else codeRight
-                case ']' => if (current == 0) codeRight
-                            else matchBracket(']').codeRight
-                case '<' => memLeft.codeRight
-                case '>' => memRight.codeRight
-                case '+' => editMem(i => (i + 1).toByte).codeRight
-                case '-' => editMem(i => (i - 1).toByte).codeRight
-                case '.' => printChar.codeRight
-                case ',' => strChar.codeRight
-                case _ => codeRight
+                                matchBracket('[')
+                            else this
+                case ']' => if (current == 0) this
+                            else matchBracket(']')
+                case '<' => memLeft
+                case '>' => memRight
+                case '+' => editMem(i => (i + 1).toByte)
+                case '-' => editMem(i => (i - 1).toByte)
+                case '.' => printChar
+                case ',' => strChar
+                case _ => this
             }
-            if (machNext.instruction <= program.length - 1 
+            if (machNext.instruction <= program.length - 2 
                 && machNext.instruction >= 0) 
-                    Some(machNext)
+                    Some(machNext.codeRight)
             else None
         }
     }
