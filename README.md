@@ -1,8 +1,8 @@
 ## Brainfuck Interpreter
 
-An uncompromising brainfuck interpreter in under 100 lines of scala. The only
+An uncompromising brainfuck interpreter in under 100 lines of scala. The only  
 limitation on the amount of available cells is your RAM. Cells are 1 Byte in  
-size. Internally, everything is immutable and each machine state is shared with
+size. Internally, everything is immutable and each machine state is shared with  
 the previous/next state
 
 ### How to use:
