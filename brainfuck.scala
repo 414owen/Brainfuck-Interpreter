@@ -1,5 +1,3 @@
-import scala.annotation.tailrec
-
 object Brainfuck {
     def headOrZero(list: List[Byte]): Byte = list match {
         case x :: xs => x
@@ -11,7 +9,7 @@ object Brainfuck {
         case Nil => Nil
     }
     
-    @tailrec def mutateToEnd(mach: Machine): Option[Machine] = 
+    def mutateToEnd(mach: Machine): Option[Machine] = 
         mach.nextState match {
             case Some(m) => mutateToEnd(m)
             case None => None
@@ -30,25 +28,16 @@ object Brainfuck {
                    current: Byte, program: String, 
                    instruction: Int) {
 
-        def memLeft(): Machine = {
-            val newCurrent: Byte = headOrZero(left)
-            val newLeft: List[Byte] = tailOrSame(left)
-            Machine(newLeft, current::right, 
-                newCurrent, program, instruction)
-        }
+        def memLeft(): Machine = copy(left = tailOrSame(left), 
+            right = current::right, current = headOrZero(left))
 
-        def memRight(): Machine = {
-            val newCurrent: Byte = headOrZero(right)
-            val newRight: List[Byte] = tailOrSame(right)
-            Machine(current::left, newRight,
-                newCurrent, program, instruction)
-        }
+        def memRight(): Machine = copy(left = current::left, 
+            right =tailOrSame(right), current = headOrZero(right))
 
         def codeRight(): Machine = copy(instruction = instruction + 1)
 
         def editMem(f: Byte => Byte): Machine = copy(current = f(current))
 
-        @tailrec 
         final def matchBracket(brac: Char, depth: Int = 0): Machine = {
             val otherBrac = if (brac == '[') ']' else '['
             val inc = if (brac == '[') 1 else -1
@@ -84,7 +73,6 @@ object Brainfuck {
                 case '-' => editMem(i => (i - 1).toByte)
                 case '.' => printChar
                 case ',' => strChar
-                case _ => this
             }
             if (machNext.instruction < program.length - 1 
                 && machNext.instruction >= 0) 
