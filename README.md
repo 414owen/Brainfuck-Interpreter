@@ -14,7 +14,8 @@ An uncompromising brainfuck interpreter in exactly 100 lines of scala. The only 
 ### Unresolvable?
 * Fix input requiring a newline character to register.
 
-(This is difficult, as reading input one character at a time requires switching
+(This is difficult, as reading input one character at a time  
+requires switching
 the console to 'raw' mode, as opposed to 'cooked' (line-by line) mode. There is
 no cross-platform way of doing this, hence it is not supported by Java or Scala,
 and I won't be implementing it for brainfuck.)
