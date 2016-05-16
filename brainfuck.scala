@@ -1,11 +1,7 @@
 object Brainfuck {
-    class Machine (ml: List[Byte], mr: List[Byte],
-                   mc: Byte, prog: String, at:Int) {
-        val left = ml
-        val right = mr
-        val current = mc
-        val program = prog
-        val instruction = at
+    case class Machine (left: List[Byte], right: List[Byte],
+                   current: Byte, program: String, 
+                   instruction: Int) {
 
         def memLeft(): Machine = {
             val newCurrent: Byte = left match {
@@ -94,7 +90,7 @@ object Brainfuck {
         }
 
         val program = scala.io.Source.fromFile(args(0))
-            .mkString.filter(a => "[]<>+-.,".contains(a))
+            .mkString.filter("[]<>+-.,".contains(_))
         mutateToEnd(new Machine(List(), List(), 0.toByte, program, 0))
     }
 }
