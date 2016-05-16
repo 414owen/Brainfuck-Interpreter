@@ -31,8 +31,7 @@ object Brainfuck {
 
         def codeRight(): Machine = copy(instruction = instruction + 1)
 
-        def editMem(f: Byte => Byte): Machine = Machine(left, 
-            right, f(current), program, instruction)
+        def editMem(f: Byte => Byte): Machine = copy(current = f(current))
 
         final def matchBracket(brac: Char, depth: Int = 0): Machine = {
             val otherBrac = if (brac == '[') ']' else '['
