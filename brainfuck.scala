@@ -42,8 +42,10 @@ object Brainfuck {
         final def matchBracket(brac: Char, depth: Int = 0): Machine = {
             val otherBrac = if (brac == '[') ']' else '['
             val inc = if (brac == '[') 1 else -1
-            val machNext = new Machine(left, right, 
-                current, program, instruction + inc)
+            val machNext = new Machine(
+                left, right,
+                current, program,
+                instruction + inc)
             program(machNext.instruction) match {
                 case `brac` => machNext.matchBracket(brac, depth - inc)
                 case `otherBrac` => if (depth + inc == inc) machNext
