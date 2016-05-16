@@ -13,16 +13,14 @@ object Brainfuck {
         mach.nextState match {
             case Some(m) => mutateToEnd(m)
             case None => None
-    }
+        }
 
-    def main(args: Array[String]) {
+    def main(args: Array[String]) =
         run(scala.io.Source.fromFile(args(0))
             .mkString.filter("[]<>+-.,".contains(_)))
-    }
 
-    def run(program: String): Unit = {
+    def run(program: String): Unit = 
         mutateToEnd(Machine(List(), List(), 0.toByte, program, 0))
-    }
 
     case class Machine (left: List[Byte], right: List[Byte],
                    current: Byte, program: String, 
@@ -41,8 +39,7 @@ object Brainfuck {
         final def matchBracket(brac: Char, depth: Int = 0): Machine = {
             val otherBrac = if (brac == '[') ']' else '['
             val inc = if (brac == '[') 1 else -1
-            val machNext = Machine(left, right, 
-                current, program, instruction + inc)
+            val machNext = copy(instruction = instruction + inc)
             program(machNext.instruction) match {
                 case `brac` => machNext.matchBracket(brac, depth - inc)
                 case `otherBrac` => if (depth == 0) machNext
@@ -56,9 +53,7 @@ object Brainfuck {
             this
         }
 
-        def strChar(): Machine = {
-            editMem(i => Console.in.read.toChar.toByte)
-        }
+        def strChar(): Machine = editMem(i => Console.in.read.toChar.toByte)
 
         def nextState(): Option[Machine] = {
             val machNext: Machine = program(instruction) match {
