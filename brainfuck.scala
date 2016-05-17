@@ -20,7 +20,7 @@ object Brainfuck {
         .mkString.filter("[]<>+-.,".contains(_)))
 
   def run(program: String): Unit = 
-    mutateToEnd(Machine(List(), List(), 0.toByte, program, 0))
+    mutateToEnd(Machine(Nil, Nil, 0.toByte, program, 0))
 
   case class Machine (left: List[Byte], right: List[Byte],
                       current: Byte, program: String,
