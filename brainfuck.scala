@@ -49,7 +49,7 @@ object Brainfuck {
     }
 
     def printChar(): Machine = {
-      print(current.toChar)
+      print(((current + 256) % 257 + 1).toChar)
       this
     }
 
