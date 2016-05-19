@@ -49,7 +49,9 @@ object Brainfuck {
     }
 
     def printChar(): Machine = {
-      print(((current + 256) % 257 + 1).toChar)
+      val toPrint = if (current < 0) (current + 256) % 257
+                    else current
+      print(toPrint.toChar)
       this
     }
 
