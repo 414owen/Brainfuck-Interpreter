@@ -14,7 +14,7 @@ the previous/next state.
 ### TODO
 * ~~Fix crashing after terminating program~~  
 * ~~Fix Stack Overflow when matching brackets are super far apart.~~
-* Fix unsigned byte emulation when cells go below 0 or above 127.
+* ~~Fix unsigned byte emulation when cells go below 0 or above 127.~~
 
 ### Unresolvable?
 * Fix input requiring a newline character to register.  
