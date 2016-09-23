@@ -1,15 +1,18 @@
 ## Brainfuck Interpreter
 
-An uncompromising brainfuck interpreter in 80 lines of scala. The only
-limitation on the amount of available cells is the RAM. Cells are 1 Byte in
-size. Internally, everything is immutable and each machine state is shared with
+An uncompromising brainfuck interpreter in 80 lines of scala. The only  
+limitation on the amount of available cells is the RAM. Cells are 1 Byte in  
+size. Internally, everything is immutable and each machine state is shared with  
 the previous/next state.
 
 ### How to use:
-    mkdir bytecode
-    scalac -d bytecode brainfuck.scala 
-    cd bytecode
-    scala Brainfuck ../examples/hanoi.bf		# Or the path of another brainfuck program
+    
+```bash
+mkdir bytecode
+scalac -d bytecode brainfuck.scala 
+cd bytecode
+scala Brainfuck ../examples/hanoi.bf		# Or the path of another brainfuck program
+```
 
 ### TODO
 * ~~Fix crashing after terminating program~~  
