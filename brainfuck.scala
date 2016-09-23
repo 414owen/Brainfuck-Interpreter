@@ -1,12 +1,12 @@
 object Brainfuck {
   def headOrZero(list: List[Byte]): Byte = list match {
     case x :: xs => x
-    case Nil => 0
+    case _ => 0
   }
 
   def tailOrSame(list: List[Byte]): List[Byte] = list match {
     case x :: xs => xs
-    case Nil => Nil
+    case same => same
   }
   
   def mutateToEnd(mach: Machine): Option[Machine] = 
@@ -43,7 +43,7 @@ object Brainfuck {
       program(machNext.instruction) match {
         case `brac` => machNext.matchBracket(brac, depth - inc)
         case `otherBrac` => if (depth == 0) machNext
-            else machNext .matchBracket(brac, depth + inc)
+                            else machNext .matchBracket(brac, depth + inc)
         case _ => machNext.matchBracket(brac, depth)
       }
     }
@@ -59,11 +59,10 @@ object Brainfuck {
 
     def nextState(): Option[Machine] = {
       val machNext: Machine = program(instruction) match {
-        case '[' => if (current == 0) 
-                matchBracket('[')
-              else this
+        case '[' => if (current == 0) matchBracket('[')
+                    else this
         case ']' => if (current == 0) this
-              else matchBracket(']')
+                    else matchBracket(']')
         case '<' => memLeft
         case '>' => memRight
         case '+' => editMem(i => (i + 1).toByte)
@@ -74,7 +73,7 @@ object Brainfuck {
       if (machNext.instruction < program.length - 1 
           && machNext.instruction >= 0) 
         Some(machNext.codeRight)
-      else None
+        else None
     }
   }
 }
