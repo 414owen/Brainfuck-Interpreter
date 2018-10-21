@@ -1,4 +1,9 @@
-## Brainfuck Interpreter
+<div align="center">
+	<p>
+	   <img src="https://owen.cafe/brainfuckinterpreter.04dbfe49.svg" height="150">
+	</p>
+	<h1>Brainfuck Interpreter</h1>
+</div>
 
 An uncompromising brainfuck interpreter in 80 lines of scala. The amount of
 available cells is limited only by the RAM available. Cells are 1 Byte in size.
